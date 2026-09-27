@@ -40,7 +40,20 @@ const getUser = async (req, res) => {
                 message: "User Not Found"
             })
         }
-        res.status(200).json({user})
+        let position = null;
+        if(user.status === "Waiting"){
+            const usersBefore = await User.countDocuments({
+                status: "Waiting",
+                createdAt: {
+                    $lt: user.createdAt
+                }
+            })
+            position = usersBefore + 1;
+        }
+        res.status(200).json({
+            user,
+            position
+        })
     } catch (err) {
         res.status(500).json({
             message: err.message

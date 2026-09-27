@@ -6,6 +6,6 @@ const {dbConnection} = require("./src/config/database")
 
 dbConnection()
 app.listen(config.port, ()=> {
-    console.log(`System works at 8080`)
+    console.log(`System works at ${config.port}`)
 })
 
